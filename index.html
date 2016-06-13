@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/angular.min.js"></script>
+    <script src="js/ValueListServiceController.js"></script>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/aui/5.2/css/aui.css" media="all">
+    <title>ValueListServiceDemo</title>
+</head>
+<body>
+    <div ng-app="ValueListServiceDemo">
+        <div ng-controller="ValueListServiceController">
+            <form class="aui aui-quicksearch url-form">
+                <label for="longfieldexample">URL: </label>
+                <input type="text" class="text full-width-field" id="longfieldexample" ng-model="url" style="width:88%;"/>
+                <button class="aui-button" ng-click="refreshValues()">Reload</button>
+                <span class="aui-icon aui-icon-wait" ng-show="waiting">Loading...</span>
+            </form>
+            <table class="aui">
+                <tbody>
+                    <tr>
+                        <th>Employee Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birth Date</th>
+                        <th>Gender</th>
+                        <th>Hire Date</th>
+                    </tr>
+                    <tr ng-repeat="value in values">
+                        <td>{{ value.emp_no }}</td>
+                        <td>{{ value.first_name }}</td>
+                        <td>{{ value.last_name}}</td>
+                        <td>{{ value.birth_date}}</td>
+                        <td>{{ value.gender}}</td>
+                        <td>{{ value.hire_date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <div class="valuesInfo" ng-show="hasValuesInfo">
+                    {{valuesInfo.totalCount | number}} Total - Page {{valuesInfo.page}} of {{(valuesInfo.totalCount/valuesInfo.numberPerPage) | number : 0}}
+                    <button class="aui-button" ng-hide="valuesInfo.page == 1" ng-click="backPage()">back</button>
+                    <button class="aui-button" ng-click="nextPage()">next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
