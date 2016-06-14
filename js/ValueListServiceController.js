@@ -76,4 +76,20 @@ app.controller('ValueListServiceController', function($scope, $http) {
         refresh();
     };
 
+    function sort(columnName, order){
+        setScopeParams();
+        $scope.params['sortByColumn'] = columnName;
+        $scope.params['sortByOrder'] = order;
+        $scope.url = getUrl($scope.params);
+        refresh();
+    }
+
+    $scope.sortAsc = function(columnName){
+        sort(columnName, "asc");
+    };
+
+    $scope.sortDesc = function(columnName){
+        sort(columnName, "desc");
+    };
+
 });
