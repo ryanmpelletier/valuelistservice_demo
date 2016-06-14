@@ -20,12 +20,7 @@
             <table class="aui">
                 <tbody>
                     <tr>
-                        <th>Employee Number</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Birth Date</th>
-                        <th>Gender</th>
-                        <th>Hire Date</th>
+                        <th ng-repeat="(key,value) in values[0]">{{key}}<span class="arrow">&#8679;</span><span class="arrow">&#8681;</span></th>
                     </tr>
                     <tr ng-repeat="value in values">
                         <td>{{ value.emp_no }}</td>
