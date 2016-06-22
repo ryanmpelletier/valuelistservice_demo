@@ -5,7 +5,6 @@ app.controller('ValueListServiceController2',function($scope,$http,valueListServ
 
     /** CONFIG - I would like to move this to some sort of configuration file**/
     var baseUrl = "http://localhost:8080/valueslistservice/values?";
-    var gridOptionsLocation = "js/config/gridOptions.json";
     var defaultParams = {
         "valueListQuery": "query",
         "page": 1,
@@ -132,7 +131,7 @@ app.controller('ValueListServiceController2',function($scope,$http,valueListServ
         }
         ]
     };
-    
+
 
     $scope.getValues = function() {
         $scope.results = undefined;

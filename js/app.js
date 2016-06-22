@@ -1,7 +1,7 @@
 /**
  * Created by 578993 on 6/20/2016.
  */
-var app = angular.module('ValueListServiceDemo', ['ui.grid','ui.grid.pagination']);
+var app = angular.module('ValueListServiceDemo', ['ngMessages']);
 
 
 

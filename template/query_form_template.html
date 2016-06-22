@@ -1,36 +1,51 @@
+<!-- This form can have error messages right?-->
 <form class="pure-form pure-form-aligned">
-    <fieldset>
-        <div class="pure-control-group">
-            <label for="emp_no">Employee Number:</label>
-            <input  id="emp_no" type="text" ng-model="formData.emp_no">
-        </div>
-        <div class="pure-control-group">
-            <label for="first_name">First Name:</label>
-            <input id="first_name" type="text" ng-model="formData.first_name"/>
-        </div>
+    <div ng-messages="{test:false}" style="color:maroon" role="alert">
+        <div ng-message="test">fuggedaboutit</div>
+    </div>
+        <!--<div ng-message="required">You did not enter a field</div>-->
+        <!--<div ng-message="minlength">Your field is too short</div>-->
+        <!--<div ng-message="maxlength">Your field is too long</div>-->
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="emp_no">Employee Number:</label>
+                <input  id="emp_no" type="text" ng-model="formData.emp_no">
+            </div>
+            <div class="pure-control-group">
+                <label for="first_name">First Name:</label>
+                <input id="first_name" type="text" ng-model="formData.first_name"/>
+            </div>
 
-        <div class="pure-control-group">
-            <label for="last_name">Last Name:</label>
-            <input id="last_name" type="text" ng-model="formData.last_name"/>
-        </div>
+            <div class="pure-control-group">
+                <label for="last_name">Last Name:</label>
+                <input id="last_name" type="text" ng-model="formData.last_name"/>
+            </div>
 
-        <div class="pure-control-group">
-            <label for="hire_date">Hire Date:</label>
-            <input id="hire_date" type="text" ng-model="formData.hire_date"/>
-        </div>
+            <div class="pure-control-group">
+                <label for="hire_date">Hire Date:</label>
+                <input id="hire_date" type="text" ng-model="formData.hire_date"/>
+            </div>
 
-        <div class="pure-control-group">
-            <label for="birth_date">Birth Date:</label>
-            <input id="birth_date" type="text" ng-model="formData.birth_date"/>
-        </div>
+            <div class="pure-control-group">
+                <label for="birth_date">Birth Date:</label>
+                <input id="birth_date" type="text" ng-model="formData.birth_date"/>
+            </div>
 
-        <div class="pure-control-group">
-            <label for="gender">Gender:</label>
-            <input id="gender" type="radio" ng-model="formData.gender" value="M"/>M
-            <input type="radio" ng-model="formData.gender" value="F" />F<br/>
-        </div>
-        <div class="pure-controls">
-            <button type="submit" class="pure-button pure-button-primary" ng-click="getValues()">Submit</button>
-        </div>
-    </fieldset>
+            <div class="pure-control-group">
+                <label for="gender">Gender:</label>
+                <input id="gender" type="radio" ng-model="formData.gender" value="M"/>M
+                <input type="radio" ng-model="formData.gender" value="F" />F<br/>
+            </div>
+            <div class="pure-control-group">
+                <label for="page">Page: </label>
+                <input id="page" type="text" placeholder="1" ng-model="formData.page"/>
+            </div>
+            <div class="pure-control-group">
+                <label for="numberPerPage">Items Per Page: </label>
+                <input id="numberPerPage" type="text" placeholder="10" ng-model="formData.numberPerPage"/>
+            </div>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary" ng-click="getValues()">Submit</button>
+            </div>
+        </fieldset>
 </form>
