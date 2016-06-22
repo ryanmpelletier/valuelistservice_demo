@@ -2,29 +2,29 @@
  * Created by 578993 on 6/9/2016.
  */
 
-
-
-//will need controller to depend on http, I would love to make a service to talk to my
-//rest service!
-
-var app = angular.module('ValueListServiceDemo', []);
-
-app.controller('ValueListServiceController', function($scope, $http) {
-
+app.controller('ValueListServiceController',function($scope, $http) {
     $scope.valuesInfo = {};
     $scope.waiting = false;
     $scope.params = {};
-    $scope.params['valueListQuery'] = 'query';
-    $scope.params['page'] = 1;
-    $scope.params['numberPerPage'] = 15;
+    // default parameters for the baseUrl, these parameters will ALWAYS sent with the request (configurable)
+    var defaultParams = {
+        "valueListQuery" : "query",
+        "page" : 1,
+        "numberPerPage" : 10
+    };
+    $scope.params = defaultParams;
+
+    $scope.conversionErrors = {};
+
 
     var baseUrl = "http://localhost:8080/valueslistservice/values?";
 
     function getUrl(params){
         var paramsString = "";
-        Object.keys(params).forEach(function(key) {
+        Object.keys(params).forEach(function(key){
             paramsString = paramsString + key + "=" + params[key] + "&";
         });
+        //trims off last &
         return (baseUrl + paramsString).slice(0, (baseUrl + paramsString).length - 1);
     }
 
@@ -56,7 +56,14 @@ app.controller('ValueListServiceController', function($scope, $http) {
                 $scope.valuesInfo.totalCount = response.data.valuesInfo.totalCount;
                 $scope.valuesInfo.page = response.data.valuesInfo.page;
                 $scope.valuesInfo.numberPerPage = response.data.valuesInfo.numberPerPage;
+                $scope.valuesInfo.totalPages = Math.ceil(($scope.valuesInfo.totalCount/$scope.valuesInfo.numberPerPage));
                 $scope.hasValuesInfo = true;
+                $scope.waiting = false;
+                $scope.conversionErrors = {};
+            },function(errorResponse){
+                if(errorResponse.status == 400){
+                    $scope.conversionErrors = errorResponse.data;
+                }
                 $scope.waiting = false;
             });
 
@@ -76,6 +83,7 @@ app.controller('ValueListServiceController', function($scope, $http) {
         refresh();
     };
 
+    //this can be moved to the service
     function sort(columnName, order){
         setScopeParams();
         $scope.params['sortByColumn'] = columnName;

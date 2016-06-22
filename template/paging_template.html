@@ -1,0 +1,5 @@
+<div class='valuesInfo' ng-show='hasValuesInfo'>
+    {{valuesInfo.totalCount | number}} Total - Page {{valuesInfo.page}} of {{valuesInfo.totalPages | number : 0}}
+    <button class='aui-button' ng-hide='valuesInfo.page == 1' ng-click='backPage()'>back</button>
+    <button class='aui-button' ng-hide='valuesInfo.page == valuesInfo.totalPages' ng-click='nextPage()'>next</button>
+</div>
