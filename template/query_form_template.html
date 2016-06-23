@@ -1,34 +1,33 @@
-<!-- This form can have error messages right?-->
 <form class="pure-form pure-form-aligned">
-    <div ng-messages="{test:false}" style="color:maroon" role="alert">
-        <div ng-message="test">fuggedaboutit</div>
-    </div>
-        <!--<div ng-message="required">You did not enter a field</div>-->
-        <!--<div ng-message="minlength">Your field is too short</div>-->
-        <!--<div ng-message="maxlength">Your field is too long</div>-->
+
         <fieldset>
             <div class="pure-control-group">
                 <label for="emp_no">Employee Number:</label>
                 <input  id="emp_no" type="text" ng-model="formData.emp_no">
+                <span ng-hide="results.errorData.emp_no == undefined" class="errorMessage" ng-bind="results.errorData.emp_no.simple_message"></span>
             </div>
             <div class="pure-control-group">
                 <label for="first_name">First Name:</label>
                 <input id="first_name" type="text" ng-model="formData.first_name"/>
+                <span ng-hide="results.errorData.first_name == undefined" class="errorMessage" ng-bind="results.errorData.first_name.simple_message"></span>
             </div>
 
             <div class="pure-control-group">
                 <label for="last_name">Last Name:</label>
                 <input id="last_name" type="text" ng-model="formData.last_name"/>
+                <span ng-hide="results.errorData.last_name == undefined" class="errorMessage" ng-bind="results.errorData.last_name.simple_message"></span>
             </div>
 
             <div class="pure-control-group">
                 <label for="hire_date">Hire Date:</label>
-                <input id="hire_date" type="text" ng-model="formData.hire_date"/>
+                <input id="hire_date" type="text" placeholder="YYYY-MM-DD" ng-model="formData.hire_date"/>
+                <span ng-hide="results.errorData.hire_date == undefined" class="errorMessage" ng-bind="results.errorData.hire_date.simple_message"></span>
             </div>
 
             <div class="pure-control-group">
                 <label for="birth_date">Birth Date:</label>
-                <input id="birth_date" type="text" ng-model="formData.birth_date"/>
+                <input id="birth_date" type="text" placeholder="YYYY-MM-DD" ng-model="formData.birth_date"/>
+                <span ng-hide="results.errorData.birth_date == undefined" class="errorMessage" ng-bind="results.errorData.birth_date.simple_message"></span>
             </div>
 
             <div class="pure-control-group">
@@ -38,7 +37,7 @@
             </div>
             <div class="pure-control-group">
                 <label for="page">Page: </label>
-                <input id="page" type="text" placeholder="1" ng-model="formData.page"/>
+                <input  id="page" type="text" placeholder="1" ng-model="formData.page"/>
             </div>
             <div class="pure-control-group">
                 <label for="numberPerPage">Items Per Page: </label>

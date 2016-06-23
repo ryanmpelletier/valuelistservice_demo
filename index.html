@@ -4,30 +4,41 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css"/>
 
-    <!--dont care to use aui right now-->
+    <!--aui stylesheet for table-->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/aui/5.2/css/aui.css" media="all">
 
     <!--pure form style -->
     <link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/forms-min.css">
 
     <!-- Angular imports -->
-    <script src="js/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-messages.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/service/ValueListService.js"></script>
-    <script src="js/controller/ValueListServiceController.js"></script>
+    <script src="js/angular/angular.min.js"></script>
 
-    <!--ui-grid imports -->
-    <link rel="stylesheet" href="css/ui-grid/ui-grid.min.3.1.1.css">
-    <script src="js/ui-grid/ui-grid.min.3.1.1.js"></script>
+    <!-- Angular app-->
+    <script src="js/app.js"></script>
+
+    <!--
+        All of these files below here reference app, I don't want that to be the case
+        I would rather have them look up the module
+    -->
+
+    <!-- Angular Direcives-->
+    <script src="js/directives/QueryFormDirective.js"></script>
+    <script src="js/directives/TablePagingDirective.js"></script>
+    <script src="js/directives/EmployeeTableDirective.js"></script>
+
+    <!-- Angular Services-->
+    <script src="js/services/ValueListService.js"></script>
+
+    <!--Angular Config -->
+    <script src="js/config/config.js"></script>
+    <!-- Angular Controllers-->
+    <script src="js/controllers/ValueListServiceController.js"></script>
 
     <title>ValueListServiceDemo</title>
 </head>
 <body>
 <div ng-app="ValueListServiceDemo">
     <div ng-controller="ValueListServiceController">
-
-        <!-- In the end I will probably just put all this in one directive?-->
         <query-form></query-form>
         <employee-table></employee-table>
         <table-paging></table-paging>

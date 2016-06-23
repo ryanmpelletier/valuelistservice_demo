@@ -5,7 +5,6 @@
     <span ng-bind="results.valuesInfo.page"></span>
     <span> of </span>
     <span ng-bind="results.valuesInfo.totalPages"></span>
-    <!--{{results.valuesInfo.totalCount | number}} Total - Page {{results.valuesInfo.page}} of {{results.valuesInfo.totalPages | number : 0}}-->
     <button class='aui-button' ng-hide='results.valuesInfo.page == 1' ng-click='backPage()'>back</button>
     <button class='aui-button' ng-hide='results.valuesInfo.page == results.valuesInfo.totalPages' ng-click='nextPage()'>next</button>
 </div>

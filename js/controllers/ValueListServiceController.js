@@ -1,34 +1,24 @@
 /**
  * Created by Ryan Pelletier on 6/9/2016.
- *
- * I think this is good, and more what a controller is supposed to look like
- * notice how everything is basically just a scope funciton, or a scope object.
- * There aren't other little objects floating around that we don't care about.
  */
 
-app.controller('ValueListServiceController',function($scope, $http, valueListService) {
+angular.module('ValueListServiceDemo').controller('ValueListServiceController',function($scope, $http, valueListService) {
 
-    var baseUrl = "http://localhost:8080/valueslistservice/values?valueListQuery=query";
-    valueListService.setBaseUrl(baseUrl);
-
-    //anything you want to be default can be in here
+    //should not be configurable at a service level, at controller
     $scope.formData = {
         page:1,
-        numberPerPage:10
+        numberPerPage:10,
+        valueListQuery: 'query'
     };
 
     $scope.getValues = function(){
-        $scope.results = undefined;
-        $scope.errorData = undefined;
+        $scope.results = undefined;//if I left this would my table not have to refresh?
         valueListService.getValues($scope.formData).then(function(responseData){
             $scope.results = responseData;
-        }, function(errorData){
-            $scope.errorData = errorData;
-        })
+        });
     };
 
     $scope.nextPage = function(){
-        console.log("PAGE",$scope.formData.page);
         $scope.formData.page = parseInt($scope.formData.page) + 1;
         $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
     };
