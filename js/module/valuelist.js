@@ -1,7 +1,7 @@
-/**
+ /**
  * Created by Ryan Pelletier on 6/23/2016.
  */
-angular.module('ValueListServiceDemo').provider("valueListService",function(){
+angular.module('valueList',[]).provider("valueListService",function(){
 
     var baseUrl = null;
     this.setBaseUrl = function(url){
@@ -32,11 +32,46 @@ angular.module('ValueListServiceDemo').provider("valueListService",function(){
                     }
                 };
             }).catch(function(errorResponse){//might want to consider adding more stuff here
-                return {errorData : errorResponse.data};
+                return {
+                    errorData : errorResponse.data,
+                    errorResponseStatus: errorResponse.status
+                };
             })
         }
         return {
             getValues: getMyValues
         };
     }
+}).controller('ValueListServiceController',function($scope, $http, valueListService) {
+
+    $scope.formData = {
+        page:1,
+        numberPerPage:15,
+        valueListQuery: 'query'
+    };
+
+    $scope.getValues = function(){
+        // $scope.results = undefined;//if I left this would my table not have to refresh?
+        valueListService.getValues($scope.formData).then(function(responseData){
+            $scope.results = responseData;
+        });
+    };
+
+    $scope.nextPage = function(){
+        $scope.formData.page = parseInt($scope.formData.page) + 1;
+        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+    };
+
+    $scope.backPage = function(){
+        $scope.formData.page = parseInt($scope.formData.page) - 1;
+        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+    };
+
+    $scope.sort = function sort(columnName, sortingOrder){
+        $scope.sortingParams = {
+            sortByColumn : columnName,
+            sortByOrder : sortingOrder
+        };
+        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+    };
 });

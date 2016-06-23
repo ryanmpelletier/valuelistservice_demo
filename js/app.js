@@ -1,8 +1,9 @@
 /**
  * Created by Ryan Pelletier on 6/20/2016.
+ *
+ * This will be dependent on the module I am about to make.
  */
-// var app = angular.module('ValueListServiceDemo',[]);
-angular.module('ValueListServiceDemo',[]);
+angular.module('ValueListServiceDemo',['valueList']);
 
 
 

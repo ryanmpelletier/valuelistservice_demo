@@ -13,36 +13,30 @@
     <!-- Angular imports -->
     <script src="js/angular/angular.min.js"></script>
 
+    <!-- My module-->
+    <script src="js/module/valuelist.js"></script>
+    <script src="js/config/valuelist_config.js"></script>
+
     <!-- Angular app-->
     <script src="js/app.js"></script>
-
-    <!--
-        All of these files below here reference app, I don't want that to be the case
-        I would rather have them look up the module
-    -->
 
     <!-- Angular Direcives-->
     <script src="js/directives/QueryFormDirective.js"></script>
     <script src="js/directives/TablePagingDirective.js"></script>
     <script src="js/directives/EmployeeTableDirective.js"></script>
 
-    <!-- Angular Services-->
-    <script src="js/services/ValueListService.js"></script>
-
-    <!--Angular Config -->
-    <script src="js/config/config.js"></script>
-    <!-- Angular Controllers-->
-    <script src="js/controllers/ValueListServiceController.js"></script>
-
     <title>ValueListServiceDemo</title>
 </head>
-<body>
-<div ng-app="ValueListServiceDemo">
-    <div ng-controller="ValueListServiceController">
-        <query-form></query-form>
-        <employee-table></employee-table>
-        <table-paging></table-paging>
-    </div>
-</div>
-</body>
+    <body>
+        <div ng-app="ValueListServiceDemo">
+            <!-- I can use built in controller, which supports sensible controls for paging and stuff-->
+            <div ng-controller="ValueListServiceController">
+                <query-form></query-form>
+                <employee-table></employee-table>
+                <table-paging></table-paging>
+            </div>
+
+            <!-- Or I can create my own controller which uses-->
+        </div>
+    </body>
 </html>
