@@ -1,7 +1,7 @@
 <table class="aui">
     <tbody>
     <tr>
-        <th ng-repeat="(key,value) in results.values[0]">{{key}}</th>
+        <th ng-repeat="(key,value) in results.values[0]">{{key}}<span class="uparrow" ng-click="sort(key,'asc')">&#8679;</span><span class="downarrow" ng-click="sort(key,'desc')">&#8681;</span></th>
     </tr>
     <tr ng-repeat="value in results.values">
         <td>{{ value.emp_no }}</td>

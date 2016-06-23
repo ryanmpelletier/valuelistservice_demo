@@ -43,3 +43,10 @@
 .grid{
     width: 1000px;
 }
+
+.errorMessage{
+    border: 1px solid red;
+    padding: 5px 5px;
+    border-radius: 5px;
+    background-color: #FFBABA;
+}
