@@ -11,7 +11,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
     this.$get = function($http) {
         var getUrl = function(params) {
             var str = [];
-            str.push("?&");
+            str.push("?");
             for(var property in params)
                 if (params.hasOwnProperty(property) && params[property] != "") {
                     str.push(encodeURIComponent(property) + "=" + encodeURIComponent(params[property]));
