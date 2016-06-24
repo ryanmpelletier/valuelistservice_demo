@@ -8,7 +8,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
         baseUrl = url;
     };
 
-    this.$get = function($http) {
+    this.$get = function($http,$q) {
         var getUrl = function(params) {
             var str = [];
             str.push("?");
@@ -20,58 +20,60 @@ angular.module('valueList',[]).provider("valueListService",function(){
         };
 
         function getMyValues(params){
+            var deferred = $q.defer();
             var url = getUrl(params);
-            return $http.get(getUrl(params)).then(function(okResponse){
-                return {
+            $http.get(getUrl(params)).then(function(okResponse){
+                deferred.resolve({
                     values: okResponse.data.values,
                     valuesInfo: {
                         page: okResponse.data.valuesInfo.page,
                         numberPerPage: okResponse.data.valuesInfo.numberPerPage,
                         totalCount: okResponse.data.valuesInfo.totalCount,
                         totalPages: Math.ceil(okResponse.data.valuesInfo.totalCount/okResponse.data.valuesInfo.numberPerPage)
-                    }
-                };
+                    },
+                    response: okResponse
+                });
             }).catch(function(errorResponse){//might want to consider adding more stuff here
-                return {
+                deferred.reject({
                     errorData : errorResponse.data,
-                    errorResponseStatus: errorResponse.status
-                };
-            })
+                    response: errorResponse
+                });
+            });
+            return deferred.promise;
         }
         return {
             getValues: getMyValues
         };
     }
-}).controller('ValueListServiceController',function($scope, $http, valueListService) {
+}).controller('ValueListServiceController',function($scope, $http, valueListService, defaultParams) {
 
     $scope.queryParams = {
-        page:1,
-        numberPerPage:15,
-        valueListQuery: 'query'
+        page:defaultParams.page,
+        numberPerPage:defaultParams.numberPerPage,
+        valueListQuery: defaultParams.valueListQuery
     };
 
     $scope.getValues = function(){
-        // $scope.results = undefined;//if I left this would my table not have to refresh?
         valueListService.getValues($scope.queryParams).then(function(responseData){
             $scope.results = responseData;
+        },function(errorResponseData){
+            $scope.results = errorResponseData;
         });
     };
 
     $scope.nextPage = function(){
         $scope.queryParams.page = parseInt($scope.queryParams.page) + 1;
-        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
+        $scope.getValues($scope.queryParams);
     };
 
     $scope.backPage = function(){
         $scope.queryParams.page = parseInt($scope.queryParams.page) - 1;
-        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
+        $scope.getValues($scope.queryParams);
     };
 
-    $scope.sort = function sort(columnName, sortingOrder){
-        $scope.sortingParams = {
-            sortByColumn : columnName,
-            sortByOrder : sortingOrder
-        };
-        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
+    $scope.sort = function sort(sortByColumn, sortByOrder){
+        $scope.queryParams.sortByColumn = sortByColumn;
+        $scope.queryParams.sortByOrder = sortByOrder;
+        $scope.getValues($scope.queryParams);
     };
 });
