@@ -8,7 +8,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
         baseUrl = url;
     };
 
-    this.$get = function($http) {
+    this.$get = function($http,$q) {
         var getUrl = function(params) {
             var str = [];
             str.push("?");
@@ -20,9 +20,10 @@ angular.module('valueList',[]).provider("valueListService",function(){
         };
 
         function getMyValues(params){
+            var deferred = $q.defer();
             var url = getUrl(params);
-            return $http.get(getUrl(params)).then(function(okResponse){
-                return {
+            $http.get(getUrl(params)).then(function(okResponse){
+                deferred.resolve({
                     values: okResponse.data.values,
                     valuesInfo: {
                         page: okResponse.data.valuesInfo.page,
@@ -30,13 +31,14 @@ angular.module('valueList',[]).provider("valueListService",function(){
                         totalCount: okResponse.data.valuesInfo.totalCount,
                         totalPages: Math.ceil(okResponse.data.valuesInfo.totalCount/okResponse.data.valuesInfo.numberPerPage)
                     }
-                };
+                });
             }).catch(function(errorResponse){//might want to consider adding more stuff here
-                return {
+                deferred.reject({
                     errorData : errorResponse.data,
-                    errorResponseStatus: errorResponse.status
-                };
-            })
+                    errorResponse: errorResponse
+                });
+            });
+            return deferred.promise;
         }
         return {
             getValues: getMyValues
@@ -53,6 +55,8 @@ angular.module('valueList',[]).provider("valueListService",function(){
     $scope.getValues = function(){
         valueListService.getValues($scope.queryParams).then(function(responseData){
             $scope.results = responseData;
+        },function(errorResponseData){
+            $scope.results = errorResponseData;
         });
     };
 
