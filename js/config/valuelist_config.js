@@ -3,7 +3,4 @@
  */
 angular.module('valueList').config(function(valueListServiceProvider){
     valueListServiceProvider.setBaseUrl("http://localhost:8080/valueslistservice/values");
-})
-    .constant('page_const',1)
-    .constant('numberPerPage_const',15)
-    .constant('valueListQuery_const','query');
+}).value("defaultParams",{page:1, numberPerPage:15, valueListQuery: 'query'});

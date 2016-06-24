@@ -42,35 +42,33 @@ angular.module('valueList',[]).provider("valueListService",function(){
             getValues: getMyValues
         };
     }
-}).controller('ValueListServiceController',function($scope, $http, valueListService, page_const, numberPerPage_const, valueListQuery_const) {
+}).controller('ValueListServiceController',function($scope, $http, valueListService, defaultParams) {
 
-    $scope.formData = {
-        page:page_const,
-        numberPerPage:numberPerPage_const,
-        valueListQuery: valueListQuery_const
+    $scope.queryParams = {
+        page:defaultParams.page,
+        numberPerPage:defaultParams.numberPerPage,
+        valueListQuery: defaultParams.valueListQuery
     };
 
     $scope.getValues = function(){
-        valueListService.getValues($scope.formData).then(function(responseData){
+        valueListService.getValues($scope.queryParams).then(function(responseData){
             $scope.results = responseData;
         });
     };
 
     $scope.nextPage = function(){
-        $scope.formData.page = parseInt($scope.formData.page) + 1;
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+        $scope.queryParams.page = parseInt($scope.queryParams.page) + 1;
+        $scope.getValues($scope.queryParams);
     };
 
     $scope.backPage = function(){
-        $scope.formData.page = parseInt($scope.formData.page) - 1;
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+        $scope.queryParams.page = parseInt($scope.queryParams.page) - 1;
+        $scope.getValues($scope.queryParams);
     };
 
-    $scope.sort = function sort(columnName, sortingOrder){
-        $scope.sortingParams = {
-            sortByColumn : columnName,
-            sortByOrder : sortingOrder
-        };
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+    $scope.sort = function sort(sortByColumn, sortByOrder){
+        $scope.queryParams.sortByColumn = sortByColumn;
+        $scope.queryParams.sortByOrder = sortByOrder;
+        $scope.getValues($scope.queryParams);
     };
 });
