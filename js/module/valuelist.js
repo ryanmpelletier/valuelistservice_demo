@@ -30,12 +30,13 @@ angular.module('valueList',[]).provider("valueListService",function(){
                         numberPerPage: okResponse.data.valuesInfo.numberPerPage,
                         totalCount: okResponse.data.valuesInfo.totalCount,
                         totalPages: Math.ceil(okResponse.data.valuesInfo.totalCount/okResponse.data.valuesInfo.numberPerPage)
-                    }
+                    },
+                    response: okResponse
                 });
             }).catch(function(errorResponse){//might want to consider adding more stuff here
                 deferred.reject({
                     errorData : errorResponse.data,
-                    errorResponse: errorResponse
+                    response: errorResponse
                 });
             });
             return deferred.promise;
