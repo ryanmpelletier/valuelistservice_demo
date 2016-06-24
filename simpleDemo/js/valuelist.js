@@ -44,7 +44,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
     }
 }).controller('ValueListServiceController',function($scope, $http, valueListService) {
 
-    $scope.formData = {
+    $scope.queryParams = {
         page:1,
         numberPerPage:15,
         valueListQuery: 'query'
@@ -52,19 +52,19 @@ angular.module('valueList',[]).provider("valueListService",function(){
 
     $scope.getValues = function(){
         // $scope.results = undefined;//if I left this would my table not have to refresh?
-        valueListService.getValues($scope.formData).then(function(responseData){
+        valueListService.getValues($scope.queryParams).then(function(responseData){
             $scope.results = responseData;
         });
     };
 
     $scope.nextPage = function(){
-        $scope.formData.page = parseInt($scope.formData.page) + 1;
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+        $scope.queryParams.page = parseInt($scope.queryParams.page) + 1;
+        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
     };
 
     $scope.backPage = function(){
-        $scope.formData.page = parseInt($scope.formData.page) - 1;
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+        $scope.queryParams.page = parseInt($scope.queryParams.page) - 1;
+        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
     };
 
     $scope.sort = function sort(columnName, sortingOrder){
@@ -72,6 +72,6 @@ angular.module('valueList',[]).provider("valueListService",function(){
             sortByColumn : columnName,
             sortByOrder : sortingOrder
         };
-        $scope.getValues(angular.merge($scope.formData,$scope.sortingParams));
+        $scope.getValues(angular.merge($scope.queryParams,$scope.sortingParams));
     };
 });
