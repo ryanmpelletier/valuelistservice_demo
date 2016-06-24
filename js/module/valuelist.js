@@ -42,16 +42,15 @@ angular.module('valueList',[]).provider("valueListService",function(){
             getValues: getMyValues
         };
     }
-}).controller('ValueListServiceController',function($scope, $http, valueListService) {
+}).controller('ValueListServiceController',function($scope, $http, valueListService, page_const, numberPerPage_const, valueListQuery_const) {
 
     $scope.formData = {
-        page:1,
-        numberPerPage:15,
-        valueListQuery: 'query'
+        page:page_const,
+        numberPerPage:numberPerPage_const,
+        valueListQuery: valueListQuery_const
     };
 
     $scope.getValues = function(){
-        // $scope.results = undefined;//if I left this would my table not have to refresh?
         valueListService.getValues($scope.formData).then(function(responseData){
             $scope.results = responseData;
         });
