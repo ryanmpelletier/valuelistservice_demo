@@ -13,7 +13,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
             var str = [];
             str.push("?");
             for(var property in params)
-                if (params.hasOwnProperty(property) && params[property] != "") {
+                if (params.hasOwnProperty(property) && params[property] !== "") {
                     str.push(encodeURIComponent(property) + "=" + encodeURIComponent(params[property]));
                 }
             return baseUrl + str.join("&");
@@ -21,7 +21,6 @@ angular.module('valueList',[]).provider("valueListService",function(){
 
         function getMyValues(params){
             var deferred = $q.defer();
-            var url = getUrl(params);
             $http.get(getUrl(params)).then(function(okResponse){
                 deferred.resolve({
                     values: okResponse.data.values,
