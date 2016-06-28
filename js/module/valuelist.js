@@ -3,9 +3,9 @@
  */
 angular.module('valueList',[]).provider("valueListService",function(){
 
-    var baseUrl = null;
-    this.setBaseUrl = function(url){
-        baseUrl = url;
+    var serviceUrl = null;
+    this.setServiceUrl = function(url){
+        serviceUrl = url;
     };
 
     this.$get = function($http,$q) {
@@ -16,7 +16,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
                 if (params.hasOwnProperty(property) && params[property] !== "") {
                     str.push(encodeURIComponent(property) + "=" + encodeURIComponent(params[property]));
                 }
-            return baseUrl + str.join("&");
+            return serviceUrl + str.join("&");
         };
 
         function getMyValues(params){
@@ -75,4 +75,5 @@ angular.module('valueList',[]).provider("valueListService",function(){
         $scope.queryParams.sortByOrder = sortByOrder;
         $scope.getValues($scope.queryParams);
     };
+
 });
