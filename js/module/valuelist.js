@@ -1,4 +1,4 @@
- /**
+/**
  * Created by Ryan Pelletier on 6/23/2016.
  */
 angular.module('valueList',[]).provider("valueListService",function(){
@@ -8,7 +8,10 @@ angular.module('valueList',[]).provider("valueListService",function(){
         serviceUrl = url;
     };
 
-    this.$get = function($http,$q) {
+    this.$get = function($http,$q,$location) {
+        if(serviceUrl === null){
+            serviceUrl = ($location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3] + "/valuelist/valuelistservice/values");
+        }
         var getUrl = function(params) {
             var str = [];
             str.push("?");
