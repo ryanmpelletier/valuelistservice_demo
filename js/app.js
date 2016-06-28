@@ -3,7 +3,7 @@
  *
  * This will be dependent on the module I am about to make.
  */
-angular.module('ValueListServiceDemo',['valueList']);
+angular.module('ValueListServiceDemo',['valueList','ngMessages']);
 
 
 
