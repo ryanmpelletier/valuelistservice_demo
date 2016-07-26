@@ -24,6 +24,7 @@ angular.module('valueList',[]).provider("valueListService",function(){
 
         function getMyValues(params){
             var deferred = $q.defer();
+            console.log(getUrl(params));
             $http.get(getUrl(params)).then(function(okResponse){
                 deferred.resolve({
                     values: okResponse.data.values,
@@ -55,36 +56,33 @@ angular.module('valueList',[]).provider("valueListService",function(){
             getValues: getMyValues
         };
     }
-}).controller('ValueListServiceController',function($scope, $http, valueListService, defaultParams) {
+}).controller('ValueListServiceController',function($scope, $http, valueListService, startingQueryParams) {
 
-    $scope.queryParams = {
-        page:defaultParams.page,
-        numberPerPage:defaultParams.numberPerPage,
-        valueListQuery: defaultParams.valueListQuery
-    };
+    $scope.queryParams = startingQueryParams;
+    $scope.results = {};
 
-    $scope.getValues = function(){
-        valueListService.getValues($scope.queryParams).then(function(responseData){
-            $scope.results = responseData;
+    $scope.getValues = function(queryName){
+        valueListService.getValues($scope.queryParams[queryName]).then(function(responseData){
+            $scope.results[queryName] = responseData;
         },function(errorResponseData){
-            $scope.results = errorResponseData;
+            $scope.results[queryName] = errorResponseData;
         });
     };
 
-    $scope.nextPage = function(){
-        $scope.queryParams.page = parseInt($scope.queryParams.page) + 1;
-        $scope.getValues($scope.queryParams);
+    $scope.nextPage = function(queryName){
+        $scope.queryParams[queryName].page = parseInt($scope.queryParams[queryName].page) + 1;
+        $scope.getValues(queryName);
     };
 
-    $scope.backPage = function(){
-        $scope.queryParams.page = parseInt($scope.queryParams.page) - 1;
-        $scope.getValues($scope.queryParams);
+    $scope.backPage = function(queryName){
+        $scope.queryParams[queryName].page = parseInt($scope.queryParams[queryName].page) - 1;
+        $scope.getValues(queryName);
     };
 
-    $scope.sort = function sort(sortByColumn, sortByOrder){
-        $scope.queryParams.sortByColumn = sortByColumn;
-        $scope.queryParams.sortByOrder = sortByOrder;
-        $scope.getValues($scope.queryParams);
+    $scope.sort = function sort(sortByColumn, sortByOrder,queryName){
+        $scope.queryParams[queryName].sortByColumn = sortByColumn;
+        $scope.queryParams[queryName].sortByOrder = sortByOrder;
+        $scope.getValues(queryName);
     };
-
+    
 });
