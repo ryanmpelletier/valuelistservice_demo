@@ -28,12 +28,12 @@ angular.module('valueList',[]).provider("valueListService",function(){
             $http.get(getUrl(params)).then(function(okResponse){
                 deferred.resolve({
                     values: okResponse.data.values,
-                    valuesInfo: {
+                    valuesInfo: okResponse.data.valuesInfo ? {
                         page: okResponse.data.valuesInfo.page,
                         numberPerPage: okResponse.data.valuesInfo.numberPerPage,
                         totalCount: okResponse.data.valuesInfo.totalCount,
                         totalPages: Math.ceil(okResponse.data.valuesInfo.totalCount/okResponse.data.valuesInfo.numberPerPage)
-                    },
+                    }:null,
                     response: {
                         status: okResponse.status,
                         statusText: okResponse.statusText,
